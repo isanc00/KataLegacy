@@ -1,14 +1,4 @@
-/* Variables de color basadas en tu diseño */
-$primary-blue: #00388b; // Azul corporativo
-$accent-yellow: #ffc700; // Amarillo de acción
-$bg-light: #f4f6f8; // Fondo gris claro de la pantalla
-$border-color: #e0e0e0;
-$editor-bg: #1e1e1e; // Fondo oscuro para coincidir con Monaco
-$secundary-blue: #d4e5f8; // Azul secundario para elementos destacados
-$label-color: #0043a9;
-$button-background: #fff;
-
-
+@use '../styles/variables' as *;
 .app-container {
   display: flex;
   flex-direction: column;
@@ -86,7 +76,7 @@ $button-background: #fff;
 .editors-container {
   display: flex;
   flex: 1;
-  gap: 20px;
+  gap: 16px;
   padding: 5px 24px 20px;;
   overflow: hidden;
 
@@ -98,6 +88,7 @@ $button-background: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
 
     .editor-header {
       background-color: darken($primary-blue, 3%);
@@ -123,22 +114,11 @@ $button-background: #fff;
         letter-spacing: 1px;
         font-weight: 700;
         background-color: transparent;
-        border: 1px solid rgba(160, 184, 224, 0.3); /* Borde súper sutil */
+        border: 1px solid rgba(160, 184, 224, 0.3);
         border-radius: 4px;
-        padding: 4px 24px 4px 8px; /* Espacio extra a la derecha para la flecha */
+        padding: 4px 24px 4px 8px;
         cursor: pointer;
         outline: none;
-
-        /* Ocultamos la flecha fea por defecto del navegador */
-        // appearance: block;
-        // -webkit-appearance: none;
-        // -moz-appearance: none;
-
-        /* Dibujamos nuestra propia flecha minimalista con el mismo color #a0b8e0 */
-        // background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a0b8e0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-        // background-repeat: no-repeat;
-        // background-position: right 8px top 50%;
-        // background-size: 8px auto;
 
         transition: all 0.2s ease;
 
@@ -147,7 +127,6 @@ $button-background: #fff;
           color: white;
         }
 
-        /* Damos estilo a las opciones desplegadas (depende un poco del navegador) */
         option {
           background-color: $primary-blue;
           color: #a0b8e0;

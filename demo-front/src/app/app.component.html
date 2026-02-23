@@ -9,7 +9,7 @@
     </div>
   </header>
 
-  <div class="toolbar">
+  <div class="toolbar" style="margin-left: 16px;">
     <button class="btn btn-primary" (click)="traducir()">
       Traducir Código
     </button>
@@ -17,7 +17,8 @@
   </div>
 
   <main class="editors-container">
-    <div class="editor-card">
+    <app-loader></app-loader>
+    <div class="editor-card" style="gap: 0px;">
       <div class="editor-header">
         <span>Código Origen</span>
         <select
@@ -32,7 +33,7 @@
       <div class="editor-body">
         <ngx-monaco-editor
           [options]="editorOptionsCobol"
-          [(ngModel)]="cobolCode"
+          [(ngModel)]="legacyCode"
         ></ngx-monaco-editor>
       </div>
     </div>
@@ -46,14 +47,14 @@
           (change)="onTargetChange()"
         >
           <option value="JAVA">JAVA</option>
-          <option value="PYTHON">PYTHON</option>
-          <option value="CSHARP">C#</option>
+          <option disabled value="PYTHON">PYTHON</option>
+          <option disabled value="CSHARP">C#</option>
         </select>
       </div>
       <div class="editor-body">
         <ngx-monaco-editor
           [options]="editorOptionsJava"
-          [(ngModel)]="javaCode"
+          [(ngModel)]="targetCode"
         ></ngx-monaco-editor>
       </div>
     </div>
