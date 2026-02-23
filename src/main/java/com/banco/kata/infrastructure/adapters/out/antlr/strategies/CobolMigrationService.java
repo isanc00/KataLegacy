@@ -15,9 +15,10 @@ import org.springframework.stereotype.Component;
 import com.banco.kata.infrastructure.adapters.in.web.dtos.MigrationResponse;
 import com.banco.kata.infrastructure.adapters.out.antlr.CobolLexer;
 import com.banco.kata.infrastructure.adapters.out.antlr.CobolParser;
-import com.banco.kata.infrastructure.adapters.out.antlr.visitors.CobolMigrationVisitor;
+import com.banco.kata.infrastructure.adapters.out.antlr.visitors.CobolToJavaVisitor;
 import com.banco.kata.infrastructure.adapters.in.web.dtos.MigrationRequest;
 import com.banco.kata.application.services.ports.MigrationStrategy;
+import com.banco.kata.application.utils.MigrationResponseFactory;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -62,7 +63,7 @@ public class CobolMigrationService implements MigrationStrategy {
 
             CobolParser.ProgramContext tree = parser.program();
 
-            CobolMigrationVisitor visitor = new CobolMigrationVisitor();
+            CobolToJavaVisitor visitor = new CobolToJavaVisitor();
             String modernCode = visitor.visit(tree);
 
             long executionTime = System.currentTimeMillis() - startTime;
@@ -87,21 +88,11 @@ public class CobolMigrationService implements MigrationStrategy {
 
         } catch(ParseCancellationException e){
             log.error("[{}] Error de sintaxis COBOL: {}", correlationId, e.getMessage());
-            return buildErrorResponse(correlationId, request, e.getMessage());
+            return MigrationResponseFactory.buildErrorResponse(correlationId, request.getTransactionCode(), e.getMessage());
         } 
         catch (Exception e) {
             log.error("[{}] Error crítico parseando el AST: {}", correlationId, e.getMessage());
-            return buildErrorResponse(correlationId, request, "Error en el motor de parsing: " + e.getMessage());
+            return MigrationResponseFactory.buildErrorResponse(correlationId, request.getTransactionCode(), "Error en el motor de parsing: " + e.getMessage());
         }
-    }
-
-    private MigrationResponse buildErrorResponse(UUID correlationId, MigrationRequest request, String errorMsg) {
-        return MigrationResponse.builder()
-                .correlationId(correlationId)
-                .transactionCode(request.getTransactionCode())
-                .status(MigrationResponse.MigrationStatus.FAILED)
-                .executionTimeMs(0L)
-                .warnings(java.util.List.of(errorMsg))
-                .build();
     }
 }
