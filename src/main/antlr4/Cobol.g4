@@ -1,22 +1,35 @@
 grammar Cobol;
 
-// ---------------------------------------------------------
-// 1. REGLAS DEL PARSER (Estructura Lógica - El AST)
-// ---------------------------------------------------------
+
+// 1. PARSER
+
 program : statement* EOF ;
 
-statement : ifStatement
-          | displayStatement ;
+statement 
+    : ifStatement
+    | displayStatement ;
 
-ifStatement : IF condition statement* (ELSE statement*)? END_IF ;
+ifStatement
+    : IF condition thenBlock
+      (ELSE IF condition thenBlock)*
+      (ELSE elseBlock)?
+      END_IF
+    ;
 
-displayStatement : DISPLAY (STRING | ID) ;
+thenBlock 
+    : statement* ;
 
-condition : ID OPERATOR NUMBER ;
+elseBlock 
+    : statement* ;
 
-// ---------------------------------------------------------
-// 2. REGLAS DEL LEXER (Tokens / Vocabulario)
-// ---------------------------------------------------------
+displayStatement 
+    : DISPLAY (STRING | ID) ;
+
+condition 
+    : ID OPERATOR NUMBER ;
+
+
+// 2. LEXER
 
 // Palabras reservadas
 IF      : 'IF' ;
@@ -25,10 +38,9 @@ END_IF  : 'END-IF' ;
 DISPLAY : 'DISPLAY' ;
 
 // Operadores y Tipos
-OPERATOR : '>' | '<' | '=' | '>=' | '<=' ;
+OPERATOR : '>=' | '<=' | '>' | '<' | '=' ;
 ID       : [a-zA-Z_][a-zA-Z0-9_]* ;
 NUMBER   : [0-9]+ ;
 STRING   : '"' .*? '"' ;
 
-// Ignorar espacios en blanco y saltos de línea
 WS       : [ \t\r\n]+ -> skip ;
