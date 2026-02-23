@@ -1,0 +1,64 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-center">
+      <div class="logo-icon">&lt;/&gt;</div>
+      <div class="header-titles">
+        <h1>Motor Migración</h1>
+        <p>Traductor de código Legacy</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar" style="margin-left: 16px;">
+    <button class="btn btn-primary" (click)="traducir()">
+      Traducir Código
+    </button>
+    <button class="btn btn-primary" (click)="limpiar()">Limpiar</button>
+  </div>
+
+  <main class="editors-container">
+    <app-loader></app-loader>
+    <div class="editor-card" style="gap: 0px;">
+      <div class="editor-header">
+        <span>Código Origen</span>
+        <select
+          class="lang-badge-select"
+          [(ngModel)]="sourceLanguage"
+          (change)="onSourceChange()"
+        >
+          <option value="COBOL">COBOL</option>
+          <option value="DELPHI">DELPHI</option>
+        </select>
+      </div>
+      <div class="editor-body">
+        <ngx-monaco-editor
+          [options]="editorOptionsCobol"
+          [(ngModel)]="legacyCode"
+        ></ngx-monaco-editor>
+      </div>
+    </div>
+
+    <div class="editor-card">
+      <div class="editor-header">
+        <span>Código Destino</span>
+        <select
+          class="lang-badge-select"
+          [(ngModel)]="targetLanguage"
+          (change)="onTargetChange()"
+        >
+          <option value="JAVA">JAVA</option>
+          <option disabled value="PYTHON">PYTHON</option>
+          <option disabled value="CSHARP">C#</option>
+        </select>
+      </div>
+      <div class="editor-body">
+        <ngx-monaco-editor
+          [options]="editorOptionsJava"
+          [(ngModel)]="targetCode"
+        ></ngx-monaco-editor>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">Motor de migración - Banco de Bogotá</footer>
+</div>
