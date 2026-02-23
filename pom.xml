@@ -78,6 +78,52 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-maven-plugin</artifactId>
+				<version>4.13.1</version>
+				<executions>
+					<execution>
+						<id>antlr</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>antlr4</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<visitor>true</visitor>
+					<listener>false</listener>
+					<sourceDirectory>${project.basedir}/src/main/antlr4</sourceDirectory>
+					<outputDirectory>
+						${project.build.directory}/generated-sources/antlr4/com/banco/kata/infrastructure/adapters/out/antlr</outputDirectory>
+
+					<arguments>
+						<argument>-package</argument>
+						<argument>com.banco.kata.infrastructure.adapters.out.antlr</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.5.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/antlr4</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
