@@ -1,0 +1,18 @@
+# Configuración dev 
+spring:
+  profiles:
+    active: dev
+  application:
+    name: Legacy2Modern Engine
+
+---
+# Perfil prod
+spring:
+  config:
+    activate:
+      on-profile: prod
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
