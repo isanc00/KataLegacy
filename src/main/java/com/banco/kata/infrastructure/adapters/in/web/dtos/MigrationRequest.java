@@ -20,5 +20,10 @@ public class MigrationRequest {
     @NotBlank(message = "El código legacy no puede estar vacío. Rechazado por seguridad.")
     @Schema(description = "Fragmento de código a procesar", example = "IF AMOUNT > 0\n  DISPLAY \"VALID\"\nELSE\n  DISPLAY \"INVALID\"\nEND-IF")
     private String legacyCode;
+
+    @NotBlank(message = "Debe especificar el lenguaje de destino.(Por el momento solo soporta java)")
+    @Pattern(regexp = "^(JAVA|PYTHON|C#)$", message = "Lenguaje de destino no soportado. Use JAVA, PYTHON o C#.")
+    @Schema(description = "Lenguaje de destino para la migración", example = "JAVA")
+    private String targetLanguage = "JAVA"; 
     
 }
