@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
@@ -8,12 +8,13 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { transactionInterceptor } from './transaction.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([transactionInterceptor])),
     provideClientHydration(withEventReplay()),
     importProvidersFrom(MonacoEditorModule.forRoot({
       baseUrl: '/assets/vs',
