@@ -1,0 +1,40 @@
+services:
+  # ==========================================
+  # MOTOR HEXAGONAL (Backend Spring Boot)
+  # ==========================================
+  backend:
+    build: 
+      context: ./legacy-migration-engine
+      dockerfile: Dockerfile
+    container_name: legacy-engine-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - CORS_ALLOWED_ORIGINS=http://localhost:4200,http://localhost
+      - SPRING_PROFILES_ACTIVE=prod #perfil de producción
+    networks:
+      - migration-network
+    restart: unless-stopped
+
+  # ==========================================
+  # INTERFAZ DE USUARIO (Frontend Angular + NGINX)
+  # ==========================================
+  frontend:
+    build: 
+      context: ./demo-front
+      dockerfile: Dockerfile
+    container_name: legacy-engine-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - migration-network
+    restart: unless-stopped
+
+# ==========================================
+# RED VIRTUAL (Aislamiento y Seguridad)
+# ==========================================
+networks:
+  migration-network:
+    driver: bridge
