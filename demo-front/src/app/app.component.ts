@@ -53,10 +53,10 @@ export class AppComponent {
     this.loaderService.show();
 
     const request: MigrationRequest = {
-      transactionCode: 'TRX-001' + crypto.randomUUID(),
       sourceLanguage: this.sourceLanguage,
       targetLanguage: this.targetLanguage,
       legacyCode: this.legacyCode,
+      transactionCode: this.transactionCode,
     };
 
     this.migrationService.translateCode(request).subscribe({
