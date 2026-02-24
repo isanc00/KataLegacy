@@ -8,11 +8,14 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class MigrationService {
-  private http = inject(HttpClient);
 
+  private http = inject(HttpClient);
   private apiUrl = 'migrations/translate';
 
   translateCode(request: MigrationRequest): Observable<MigrationResponse> {
-    return this.http.post<MigrationResponse>(`${environment.apiUrl}/${this.apiUrl}`, request);
+    return this.http.post<MigrationResponse>(
+      `${environment.apiUrl}/${this.apiUrl}`,
+      request,
+    );
   }
 }
