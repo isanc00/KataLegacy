@@ -150,7 +150,69 @@
       }
     }
   }
+
 }
+
+.migration-info {
+  /* Alineamos los márgenes con el padding de 24px que ya tiene el editors-container */
+  padding: 0 24px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  .audit-console {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px; /* Bordes suaves para independizar el componente */
+    display: flex;
+    flex-direction: column;
+    height: 180px; /* Altura controlada para no comerse toda la pantalla */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    overflow: hidden; /* Mantiene las esquinas redondeadas limpias */
+
+    .console-header {
+      background-color: #2d2d30;
+      color: #a0b8e0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 16px;
+      border-bottom: 1px solid #3f3f46;
+    }
+
+    .console-body {
+      padding: 12px 16px;
+      overflow-y: auto; /* Agrega scroll interno si hay muchas reglas */
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+
+      .log-line {
+        margin-bottom: 4px;
+
+        .timestamp {
+          color: #858585;
+          margin-right: 8px;
+          user-select: none;
+        }
+      }
+
+      .log-info {
+        color: #ffffff;
+      }
+
+      .log-success {
+        color: #4caf50;
+      }
+
+      .log-warning {
+        color: #ffb300;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+
 
 .app-footer {
   background-color: darken($primary-blue, 5%);

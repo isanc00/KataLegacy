@@ -9,7 +9,7 @@
     </div>
   </header>
 
-  <div class="toolbar" style="margin-left: 16px;">
+  <div class="toolbar" style="margin-left: 16px">
     <button class="btn btn-primary" (click)="traducir()">
       Traducir Código
     </button>
@@ -18,7 +18,7 @@
 
   <main class="editors-container">
     <app-loader></app-loader>
-    <div class="editor-card" style="gap: 0px;">
+    <div class="editor-card" style="gap: 0px">
       <div class="editor-header">
         <span>Código Origen</span>
         <select
@@ -59,6 +59,34 @@
       </div>
     </div>
   </main>
+  @if (appliedRules.length > 0 || warnings.length > 0) {
+    <section class="migration-info" style="margin-left:16px">
+      <div class="audit-console">
+        <div class="console-header">
+          <span>Terminal de Auditoría y Trazabilidad</span>
+        </div>
 
+        <div class="console-body">
+          <div class="log-line log-info">
+            <span class="timestamp">[INFO]</span> Correlation ID: {{ correlationId }}
+            status: {{ status }} - Tiempo de Ejecución: {{ executionTimeMs }} ms
+          </div>
+
+          @for (rule of appliedRules; track $index) {
+            <div class="log-line log-success">
+              <span class="timestamp">[AST-RULE]</span> {{ rule }}
+            </div>
+          }
+
+          @for (warning of warnings; track $index) {
+            <div class="log-line log-warning">
+              <span class="timestamp">[WARNING]</span> {{ warning }}
+            </div>
+          }
+
+        </div>
+      </div>
+    </section>
+  }
   <footer class="app-footer">Motor de migración - Banco de Bogotá</footer>
 </div>
